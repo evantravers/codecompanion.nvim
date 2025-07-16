@@ -249,7 +249,7 @@ M.completion = {
         vim.fn.complete(
           start + 1,
           vim.tbl_filter(function(item)
-            return vim.startswith(item.word:lower(), prefix:lower())
+            return vim.startswith("{" .. item.word:lower() .. "}", prefix:lower())
           end, items)
         )
       end)
