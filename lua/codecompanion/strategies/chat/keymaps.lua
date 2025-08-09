@@ -207,7 +207,15 @@ M.completion = {
         -- Process each item to match the completion format
         for _, item in ipairs(items) do
           if item.label then
-            item.word = item.label
+            -- Add bracket wrapping for variables and tools like cmp/blink do
+            if item.type == "variable" then
+              item.word = string.format("#{%s}", item.label:sub(2))
+            elseif item.type == "tool" then
+              item.word = string.format("@{%s}", item.label:sub(2))
+            else
+              item.word = item.label
+            end
+
             item.abbr = item.label:sub(2)
             item.menu = item.description or item.detail
             item.icase = 1
